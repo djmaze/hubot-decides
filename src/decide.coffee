@@ -3,31 +3,33 @@
 #   hubot randomly (suggest|choose|pick|select) (from|amongst|between|among|amongst|out of) <element1> or <element2> ... - Let hubot randomly choose one of the elements in your list
 #   hubot (explain|why|arguments|reason) - Ask hubot to explain the choice
 
-getNumberOfSearchResults = require './get-number-of-search-results.coffee'
+#getNumberOfSearchResults = require './get-number-of-search-results.coffee'
 Q = require 'q'
 {shuffle, take, chain} = require 'lodash'
 
-getPromiseOfSearchResults = (options) ->
-  Q.all options.map (option) ->
-    getNumberOfSearchResults option
+#getPromiseOfSearchResults = (options) ->
+  #Q.all options.map (option) ->
+    #getNumberOfSearchResults option
 
-sortByNumberOfSearchResults = (options) ->
-  getPromiseOfSearchResults(options).then (numbersOfResults) ->
-    chain(options)
-    .map (option, index) ->
-      term: option,
-      numberOfResults: numbersOfResults[index]
-    .sortBy('numberOfResults')
-    .reverse()
-    .pluck('term')
-    .value()
+#sortByNumberOfSearchResults = (options) ->
+  #getPromiseOfSearchResults(options).then (numbersOfResults) ->
+    #chain(options)
+    #.map (option, index) ->
+      #term: option,
+      #numberOfResults: numbersOfResults[index]
+    #.sortBy('numberOfResults')
+    #.reverse()
+    #.pluck('term')
+    #.value()
 
 
 getOrderChangingFunction = (isRandom) ->
-  if isRandom
-    return shuffle
-  else
-    return sortByNumberOfSearchResults
+  #if isRandom
+    #return shuffle
+  #else
+    #return sortByNumberOfSearchResults
+  # FIXME currently only shuffle is supported
+  return shuffle
 
 
 parseOptions = (stringOfOptions) ->
